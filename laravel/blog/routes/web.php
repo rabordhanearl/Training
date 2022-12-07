@@ -18,3 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/post', [PostController::class, 'index']);
+
+// Route::resource('posts', PostController::class);
+
+Route::get('/contact', [PostController::class, 'showMyContact']);
+
+Route::get('post/{id}/{name}/{age}', [PostController::class, 'showPost']);
