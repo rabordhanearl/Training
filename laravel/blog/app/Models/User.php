@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,6 +34,25 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
+    public function post()
+    {
+        return $this->hasOne(Post::class);
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class)->withPivot('created_at');
+    }
+    public function countries(){
+        return $this->belongsToMany(Country::class);
+    }
+    public function photos(){
+        return $this->morphMany(Photo::class, 'imageable');
+    }
     /**
      * The attributes that should be cast.
      *
@@ -41,4 +61,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
 }
