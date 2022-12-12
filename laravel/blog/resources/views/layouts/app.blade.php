@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 style="color: red;">This is Master Template</h1>
+    
     <div class="container">
 
     @yield('content')

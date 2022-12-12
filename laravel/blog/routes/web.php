@@ -19,6 +19,12 @@ use App\Http\Controllers\PostController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::resource('/posts', PostController::class);
+
+
+
+
 // Route::get('photo', function () {
 //     $post = Post::find(1);
 //     foreach ($post->photos as $photo) {
@@ -34,33 +40,33 @@ use App\Http\Controllers\PostController;
 //     }
 // });
 
-Route::get('tag/video', function () {
-    $tag = Tag::find(1);
+// Route::get('tag/video', function () {
+//     $tag = Tag::find(1);
 
-    foreach ($tag->videos as $video) {
-        return $video;
-    }
-});
+//     foreach ($tag->videos as $video) {
+//         return $video;
+//     }
+// });
 
 // Route::get('photo/{id}/post', function ($id) {
 //     $photo = Photo::findOrFail($id);
 
 //     return $photo->imageable;
 // });
-Route::get('/user/{id}/post', function($id){
-    return  User::find($id)->post;
-});
+// Route::get('/user/{id}/post', function($id){
+//     return  User::find($id)->post;
+// });
 
-Route::get('/post/{id}/user', function($id){
-    return  Post::find($id)->user;
-});
-Route::get('posts/{id}', function ($id) {
-    $result = User::find($id);
+// Route::get('/post/{id}/user', function($id){
+//     return  Post::find($id)->user;
+// });
+// Route::get('posts/{id}', function ($id) {
+//     $result = User::find($id);
 
-    foreach ($result->posts as $post) {
-        echo $post->title . '</br>';
-    }
-});
+//     foreach ($result->posts as $post) {
+//         echo $post->title . '</br>';
+//     }
+// });
 Route::get('roles/{id}', function ($id) {
     return User::find($id)->roles()->get();
 
@@ -68,22 +74,22 @@ Route::get('roles/{id}', function ($id) {
     //     return $role->name;
     // }
 });
-Route::get('user/pivot', function () {
-    $result = User::find(1)->roles;
+// Route::get('user/pivot', function () {
+//     $result = User::find(1)->roles;
 
-    foreach ($result as $role) {
-        return $role->pivot->created_at;
-    }
-});
-Route::get('user/country/{id}', function ($id) {
-    $country = Country::find($id);
+//     foreach ($result as $role) {
+//         return $role->pivot->created_at;
+//     }
+// });
+// Route::get('user/country/{id}', function ($id) {
+//     $country = Country::find($id);
 
-    foreach ($country->posts as $post ) {
-        # code...
-        echo $post->title . '</br>';
-    }
+//     foreach ($country->posts as $post ) {
+//         # code...
+//         echo $post->title . '</br>';
+//     }
    
-});
+// });
 // Route::get('/insert', function () {
     
 //     DB::insert('insert into posts (title, content, author) values (?, ?, ?)', ['Php with Laravel', 'Laravel is a PHP platform', 'Dhan Earl Rabor']);
@@ -132,9 +138,9 @@ Route::get('/', function () {
 //     $post->save();
 // });
 
-Route::get('create', function () {
-    return Post::create(['user_id'=>001,'title'=>'Star Wars', 'content'=>'Anakin Skywalker is Gay.']);
-});
+// Route::get('create', function () {
+//     return Post::create(['user_id'=>001,'title'=>'Star Wars', 'content'=>'Anakin Skywalker is Gay.']);
+// });
 
 // Route::get('/update', function () {
 //     Post::where('id', 3)->where('is_admin', 0)->update(['title'=>'Star Wars', 'content'=>'Anakin Skywalker is Gay.', 'author'=>'Darth Vader']);
