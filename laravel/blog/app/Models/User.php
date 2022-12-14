@@ -53,6 +53,13 @@ class User extends Authenticatable
     public function photos(){
         return $this->morphMany(Photo::class, 'imageable');
     }
+
+    public function getNameAttribute($value){
+        return ucfirst($value);
+    }
+    public function setNameAttribute($value){
+       $this->attributes['name'] = ucfirst($value);
+    }
     /**
      * The attributes that should be cast.
      *

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+
+        $posts = Post::list();
 
         return view('posts.index', compact('posts'));
     }
@@ -36,14 +38,27 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
+
+        $input = $request->all();
+        if($file = $request->file('file')){
+            $name = $file->getClientOriginalName();
+
+            $file->move('images', $name);
+            $input['path'] = $name;
+        }
+
         $user = User::find(1);
-        $user->posts()->create($request->all());
-        // $post = new Post;
-        // $post->title = $request->title;
-        // $post->save();
-        return redirect('/posts');
+        $result = $user->posts()->create($input);
+
+        return $result->path;
+        // $file = $request->file('file');
+        // // Post::create($request->all());
+        // // return redirect('/posts');
+        // echo $file->getClientOriginalName();
+        // echo '</br>';
+        // echo $file->getSize();
     }
 
     /**

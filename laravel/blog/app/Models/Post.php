@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,12 +10,14 @@ class Post extends Model
 {
     use HasFactory;
 
+    public $directory = '/images/';
     protected $fillable = [
     
         'user_id',
         'title', 
         'content',
         'author',
+        'path',
 
     ];
 
@@ -29,5 +32,12 @@ class Post extends Model
 
     public function tags(){
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public static function scopeList($query){
+        return $query->orderBy('id','asc')->get();
+    }
+    public function getPathAttribute($value){
+        return $this->directory . $value;
     }
 }

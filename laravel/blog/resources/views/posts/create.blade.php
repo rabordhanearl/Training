@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 
@@ -5,14 +6,44 @@
 
 <h1>Create Post</h1>
 
-    <form method="POST" action="/posts">
-    @csrf
-        <input type="text" name="title" placeholder="Enter Title">
-        <input type="text" name="content" placeholder="Enter Content">
-        <input type="submit" class="submit">
-    </form>
+
+    {!! Form::open(['method'=>'POST', 'action'=>'App\Http\Controllers\PostController@store', 'files'=>true]) !!}
+        {{ csrf_field() }}
+
+        <div class="form-group">
+            {!! Form::label('title', 'Title') !!}
+            {!! Form::text('title', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::file('file', ['class'=>'form-control']) !!}
+        </div>
 
 
+        <div class="form-group">
+            
+            {!! Form::label('content', 'Content') !!}
+            {!! Form::text('content', null, ['class'=>'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
+
+        </div>
+
+        {{-- <input type="submit" class="submit"> --}}
+    
+    {!! Form::close() !!}
+
+        @if(count($errors) >0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        
+        @endif
 
 
 

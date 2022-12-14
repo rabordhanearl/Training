@@ -1,12 +1,13 @@
 <?php
 
-use App\Models\Post;
+// use App\Models\Post;
 use App\Models\User;
-use App\Models\Roles;
-use App\Models\Country;
-use App\Models\Photo;
-use App\Models\Tag;
-use App\Models\Video;
+// use App\Models\Roles;
+// use App\Models\Country;
+// use App\Models\Photo;
+// use App\Models\Tag;
+// use App\Models\Video;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 /*
@@ -19,9 +20,28 @@ use App\Http\Controllers\PostController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware'=>'web'], function(){
 
-Route::resource('/posts', PostController::class);
 
+    Route::resource('/posts', PostController::class);
+
+    Route::get('/dates', function(){
+        $date = new DateTime();
+
+        echo $date->format('m-d-Y');
+
+        echo '</br>';
+        echo Carbon::now()->addDays(10)->diffForHumans();
+        echo '</br>';
+        echo Carbon::now()->yesterday()->diffForHumans();
+    });
+
+    Route::get('/setname', function(){
+        $user = User::find(1);
+        $user->name = 'icecream';
+        $user->save();
+    });
+});
 
 
 
@@ -67,13 +87,13 @@ Route::resource('/posts', PostController::class);
 //         echo $post->title . '</br>';
 //     }
 // });
-Route::get('roles/{id}', function ($id) {
-    return User::find($id)->roles()->get();
+// Route::get('roles/{id}', function ($id) {
+//     return User::find($id)->roles()->get();
 
-    // foreach ($result as $role) {
-    //     return $role->name;
-    // }
-});
+//     foreach ($result as $role) {
+//         return $role->name;
+//     }
+// });
 // Route::get('user/pivot', function () {
 //     $result = User::find(1)->roles;
 
