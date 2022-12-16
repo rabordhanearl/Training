@@ -7,6 +7,8 @@
             <div class="alert alert-danger">{{ session('message') }}</div>
             @elseif (session('post_created_message'))
             <div class="alert alert-success">{{ session('post_created_message') }}</div>
+            @elseif (session('message-updated'))
+            <div class="alert alert-success">{{ session('message-updated') }}</div>
           @endif
             <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -18,6 +20,7 @@
               <thead>
                 <tr>
                   <th>Id</th>
+                  <th>Owner</th> 
                   <th>Title</th>
                   <th>Image</th>
                   <th>Created At</th>
@@ -49,11 +52,12 @@
                   <td>{{ $post->created_at->diffForHumans() }}</td>
                   <td>{{ $post->updated_at->diffForHumans() }}</td>
                   <td>
+                    @can('view', $post)
                     <form action="{{ route('post.destroy', $post->id) }}" method="post" enctype="multipart/form-data">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger" type="submit"  >Delete</button>
-
+                    @endcan
                     </form>
                   </td>
                 </tr>
@@ -65,6 +69,9 @@
         </div>
       </div>
 
+        <div class="pagination justify-content-center">
+          {{ $posts->links() }}
+        </div>
     @endsection
 
     @section('scripts')
@@ -73,7 +80,7 @@
         <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
         <!-- Page level custom scripts -->
-        <script src=" {{  asset('js/demo/datatables-demo.js') }} "></script>
+        {{-- <script src=" {{  asset('js/demo/datatables-demo.js') }} "></script> --}}
  
     @endsection
 

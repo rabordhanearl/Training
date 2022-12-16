@@ -4,8 +4,9 @@
 
         <h1>Edit a Post</h1>
         
-        <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input 
@@ -29,14 +30,15 @@
                         
                 </div>
                 <div class="form-group">
+                    
                     <textarea 
                         name="body" 
                         class="form-control" 
                         id="body" 
                         cols="30" 
                         rows="10"
-                        value="{{ $post->body }}">
-                        
+                        >
+                        {{ $post->body }}
                     </textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
