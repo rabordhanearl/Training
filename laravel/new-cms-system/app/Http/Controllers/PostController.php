@@ -36,8 +36,16 @@ class PostController extends Controller
             'body'=> 'required',
         ]);
         
-        if(request('post_image')){
-            $inputs['post_image'] = request('post_image')->store('images');
+        // if(request('post_image')){
+        //     $inputs['post_image'] = request('post_image')->store('images');
+        // }
+
+  
+        if ($image = request('post_image')) {
+            $destinationPath = 'storage/images/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $inputs['post_image'] = "$profileImage";
         }
         
         auth()->user()->posts()->create($inputs);

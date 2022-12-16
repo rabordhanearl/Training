@@ -18,7 +18,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
+        'avatar',
         'email',
         'password',
     ];
@@ -42,7 +44,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function  getAvatarAttribute($value) {
+        return asset('storage/'. $value);
+    }
+
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
+
     public function posts(){
         return $this->hasMany(Post::class);
+    }
+
+    public function permissions(){
+        return $this->BelongsToMany(Permission::class);
+    }
+
+    public function roles(){
+        return $this->BelongsToMany(Role::class);
+    }
+
+    public function userHasRole($role_name){
+        foreach ($this->roles as $role) {
+            if($role_name == $role->name)
+            return true;
+        }
+        return false;
     }
 }
