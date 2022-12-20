@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::middleware(['auth'])->group(function(){
+    
     Route::get('/post/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('post');    
 
     Route::get('admin/posts', [App\Http\Controllers\PostController::class, 'index'])->name('post.index');
@@ -13,3 +15,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('admin/posts/{post}/edit', [App\Http\Controllers\PostController::class, 'edit'])->name('post.edit');
     Route::delete('admin/posts/{post}/destroy', [App\Http\Controllers\PostController::class, 'destroy'])->name('post.destroy');
     Route::patch('admin/posts/{post}/update', [App\Http\Controllers\PostController::class, 'update'])->name('post.update');
+
+});
+    
